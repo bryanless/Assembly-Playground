@@ -26,11 +26,13 @@ struct Level1Guide: View {
 extension Level1Guide {
   var navigationBar: some View {
     HStack {
-      RoundedRectangle(cornerRadius: RoundedShape.small)
-        .frame(maxWidth: 250, maxHeight: 20)
+      NavigationTitleWireframeView {
+        print("title tapped")
+      }
       Spacer(minLength: Space.extraLarge)
-      Circle()
-        .frame(maxWidth: 40)
+      ProfilePictureWireframeView {
+        print("picture tapped")
+      }
     }
   }
 
@@ -53,14 +55,12 @@ extension Level1Guide {
 
   var gridItem: some View {
     VStack(alignment: .leading) {
-      RoundedRectangle(cornerRadius: RoundedShape.small)
-        .aspectRatio(4/3, contentMode: .fit)
+      ImageWireframeView {
+        print("Image tapped")
+      }
 
-      VStack(alignment: .leading, spacing: Space.extraSmall) {
-        RoundedRectangle(cornerRadius: RoundedShape.extraSmall)
-          .frame(maxWidth: 100, maxHeight: 12)
-        RoundedRectangle(cornerRadius: RoundedShape.extraSmall)
-          .frame(maxWidth: 60, maxHeight: 12)
+      ImageCaptionWireframeView {
+        print("Caption tapped")
       }
     }
   }
