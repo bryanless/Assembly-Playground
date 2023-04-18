@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct ImageCaptionWireframeView: View {
-  var onTap: () -> Void
+  @Binding var isHidden: Bool
+  var onTap: (Level1ComponentEnum) -> Void
 
-  init(onTap: @escaping () -> Void) {
+  init(isHidden: Binding<Bool> = .constant(false), onTap: @escaping (Level1ComponentEnum) -> Void = { _ in }) {
+    _isHidden = isHidden
     self.onTap = onTap
   }
 
@@ -25,13 +27,16 @@ struct ImageCaptionWireframeView: View {
       Spacer()
     }
     .contentShape(Rectangle())
-    .onTapGesture(perform: onTap)
+    .opacity(isHidden ? 0 : 1)
+    .onTapGesture {
+      onTap(.imageCaption)
+    }
   }
 }
 
 struct ImageCaptionWireframeView_Previews: PreviewProvider {
   static var previews: some View {
-    ImageCaptionWireframeView {
+    ImageCaptionWireframeView(isHidden: .constant(false)) { componentEnum in
       print("Image caption tapped")
     }
   }

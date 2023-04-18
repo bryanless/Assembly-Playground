@@ -5,8 +5,6 @@
 //  Created by Bryan on 04/04/23.
 //
 
-import Foundation
-
 struct Space {
   /// 0.0
   static let none = 0.0

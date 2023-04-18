@@ -26,13 +26,9 @@ struct Level1Guide: View {
 extension Level1Guide {
   var navigationBar: some View {
     HStack {
-      NavigationTitleWireframeView {
-        print("title tapped")
-      }
+      NavigationTitleWireframeView()
       Spacer(minLength: Space.extraLarge)
-      ProfilePictureWireframeView {
-        print("picture tapped")
-      }
+      ProfilePictureWireframeView()
     }
   }
 
@@ -55,13 +51,8 @@ extension Level1Guide {
 
   var gridItem: some View {
     VStack(alignment: .leading) {
-      ImageWireframeView {
-        print("Image tapped")
-      }
-
-      ImageCaptionWireframeView {
-        print("Caption tapped")
-      }
+      ImageWireframeView()
+      ImageCaptionWireframeView()
     }
   }
 }

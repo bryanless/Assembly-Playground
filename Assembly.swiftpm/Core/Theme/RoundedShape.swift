@@ -5,8 +5,6 @@
 //  Created by Bryan on 04/04/23.
 //
 
-import Foundation
-
 struct RoundedShape {
   /// 0
   static let none = 0

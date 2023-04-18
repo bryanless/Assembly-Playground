@@ -8,22 +8,29 @@
 import SwiftUI
 
 struct NavigationTitleWireframeView: View {
-  var onTap: () -> Void
+  @Binding var isHidden: Bool
+  var onTap: (Level1ComponentEnum) -> Void
 
-  init(onTap: @escaping () -> Void) {
-    self.onTap = onTap
-  }
+  init(
+    isHidden: Binding<Bool> = .constant(false),
+    onTap: @escaping (Level1ComponentEnum) -> Void = { _ in }) {
+      _isHidden = isHidden
+      self.onTap = onTap
+    }
 
   var body: some View {
     RoundedRectangle(cornerRadius: RoundedShape.small)
       .frame(maxWidth: 250, maxHeight: 20)
-      .onTapGesture(perform: onTap)
+      .opacity(isHidden ? 0 : 1)
+      .onTapGesture {
+        onTap(.navigationTitle)
+      }
   }
 }
 
-struct SwiftUIView_Previews: PreviewProvider {
+struct NavigationTitleWireframeView_Previews: PreviewProvider {
   static var previews: some View {
-    NavigationTitleWireframeView {
+    NavigationTitleWireframeView(isHidden: .constant(false)) { _ in
       print("Navigation title tapped")
     }
   }

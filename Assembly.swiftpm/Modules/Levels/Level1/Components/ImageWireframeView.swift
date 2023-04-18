@@ -8,22 +8,29 @@
 import SwiftUI
 
 struct ImageWireframeView: View {
-  var onTap: () -> Void
+  @Binding var isHidden: Bool
+  var onTap: (Level1ComponentEnum) -> Void
 
-  init(onTap: @escaping () -> Void) {
-    self.onTap = onTap
-  }
+  init(
+    isHidden: Binding<Bool> = .constant(false),
+    onTap: @escaping (Level1ComponentEnum) -> Void = { _ in }) {
+      _isHidden = isHidden
+      self.onTap = onTap
+    }
 
   var body: some View {
     RoundedRectangle(cornerRadius: RoundedShape.small)
       .aspectRatio(4/3, contentMode: .fit)
-      .onTapGesture(perform: onTap)
+      .opacity(isHidden ? 0 : 1)
+      .onTapGesture {
+        onTap(.image)
+      }
   }
 }
 
 struct ImageWireframeView_Previews: PreviewProvider {
   static var previews: some View {
-    ImageWireframeView {
+    ImageWireframeView(isHidden: .constant(false)) { _ in
       print("Image tapped")
     }
   }

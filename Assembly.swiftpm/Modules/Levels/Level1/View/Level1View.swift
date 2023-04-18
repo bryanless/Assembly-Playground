@@ -22,9 +22,7 @@ struct Level1View: View {
           if !viewModel.isAssembleMode {
             disassembleCanvas
           }
-          if viewModel.isAssembleMode {
-            trailingDock
-          }
+          trailingDock
         }
         Button("end disassemble") {
           viewModel.endDisassembleMode()
@@ -51,7 +49,9 @@ extension Level1View {
     ZStack {
       Rectangle()
         .foregroundColor(.mint)
-      Level1Guide()
+      Level1MainCanvas { componentType in
+        viewModel.onComponentTap(componentType: componentType)
+      }
         .padding(Space.extraLarge)
     }
   }

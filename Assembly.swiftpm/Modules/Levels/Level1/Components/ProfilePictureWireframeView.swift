@@ -8,22 +8,29 @@
 import SwiftUI
 
 struct ProfilePictureWireframeView: View {
-  var onTap: () -> Void
+  @Binding var isHidden: Bool
+  var onTap: (Level1ComponentEnum) -> Void
 
-  init(onTap: @escaping () -> Void) {
-    self.onTap = onTap
-  }
+  init(
+    isHidden: Binding<Bool> = .constant(false),
+    onTap: @escaping (Level1ComponentEnum) -> Void = { _ in }) {
+      _isHidden = isHidden
+      self.onTap = onTap
+    }
 
   var body: some View {
     Circle()
       .frame(maxWidth: 40)
-      .onTapGesture(perform: onTap)
+      .opacity(isHidden ? 0 : 1)
+      .onTapGesture {
+        onTap(.profilePicture)
+      }
   }
 }
 
 struct ProfilePictureWireframeView_Previews: PreviewProvider {
   static var previews: some View {
-    ProfilePictureWireframeView {
+    ProfilePictureWireframeView(isHidden: .constant(false)) { _ in
       print("Profile picture tapped")
     }
   }
