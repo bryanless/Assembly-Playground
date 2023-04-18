@@ -64,19 +64,7 @@ extension Level1View {
 
   /// Shows the list of components and tools that are available
   var trailingDock: some View {
-    VStack {
-      Rectangle()
-        .frame(width: 100, height: 100)
-        .cornerRadius(RoundedShape.medium)
-
-      Rectangle()
-        .frame(width: 100, height: 100)
-        .cornerRadius(RoundedShape.medium)
-
-      Rectangle()
-        .frame(width: 100, height: 100)
-        .cornerRadius(RoundedShape.medium)
-    }
+    TrailingDockView<Level1ComponentEnum>(items: viewModel.trailingDockItems)
   }
 }
 

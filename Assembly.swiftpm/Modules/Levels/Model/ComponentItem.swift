@@ -10,5 +10,5 @@ import SwiftUI
 
 struct ComponentItem<ComponentType> {
   let type: ComponentType
-  let view: any View
+  let view: AnyView
 }

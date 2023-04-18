@@ -18,17 +18,18 @@ let package = Package(
             targets: ["AppModule"],
             bundleIdentifier: "com.sneaky.Assembly",
             teamIdentifier: "A43BFTSZWQ",
-            displayVersion: "1.0",
+            displayVersion: "1.0.0",
             bundleVersion: "1",
             appIcon: .placeholder(icon: .lightningBolt),
-            accentColor: .presetColor(.green),
+            accentColor: .presetColor(.mint),
             supportedDeviceFamilies: [
-                .pad,
+                .pad
             ],
             supportedInterfaceOrientations: [
                 .landscapeRight,
-                .landscapeLeft,
-            ]
+                .landscapeLeft
+            ],
+            appCategory: .education
         )
     ],
     targets: [

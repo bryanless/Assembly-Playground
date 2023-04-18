@@ -15,16 +15,28 @@ class Level1ViewModel: ObservableObject {
     isAssembleMode: Bool = false,
     trailingDockItems: [TrailingDockItem<Level1ComponentEnum>] = [
       TrailingDockItem(
-        item: ComponentItem<Level1ComponentEnum>(type: .navigationTitle, view: NavigationTitleWireframeView()),
+        id: 0,
+        component: ComponentItem<Level1ComponentEnum>(
+          type: .navigationTitle,
+          view: AnyView(NavigationTitleWireframeView())),
         amount: 0),
       TrailingDockItem(
-        item: ComponentItem<Level1ComponentEnum>(type: .profilePicture, view: ProfilePictureWireframeView()),
+        id: 1,
+        component: ComponentItem<Level1ComponentEnum>(
+          type: .profilePicture,
+          view: AnyView(ProfilePictureWireframeView())),
         amount: 0),
       TrailingDockItem(
-        item: ComponentItem<Level1ComponentEnum>(type: .image, view: ImageWireframeView()),
+        id: 2,
+        component: ComponentItem<Level1ComponentEnum>(
+          type: .image,
+          view: AnyView(ImageWireframeView())),
         amount: 0),
       TrailingDockItem(
-        item: ComponentItem<Level1ComponentEnum>(type: .imageCaption, view: ImageCaptionWireframeView()),
+        id: 3,
+        component: ComponentItem<Level1ComponentEnum>(
+          type: .imageCaption,
+          view: AnyView(ImageCaptionWireframeView())),
         amount: 0),
     ]) {
       self.isAssembleMode = isAssembleMode
@@ -32,8 +44,10 @@ class Level1ViewModel: ObservableObject {
     }
   
   func onComponentTap(componentType: Level1ComponentEnum) {
-    if let index = trailingDockItems.firstIndex(where: { $0.item.type == componentType }) {
-      trailingDockItems[index].amount += 1
+    if let index = trailingDockItems.firstIndex(where: { $0.component.type == componentType }) {
+      withAnimation {
+        trailingDockItems[index].amount += 1
+      }
     }
   }
 
