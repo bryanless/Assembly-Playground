@@ -27,25 +27,25 @@ struct TrailingDockView_Previews: PreviewProvider {
         component: ComponentItem(
           type: .navigationTitle,
           view: AnyView(NavigationTitleWireframeView())),
-        amount: 1),
+        currentAmount: 1),
       TrailingDockItem(
         id: 1,
         component: ComponentItem(
           type: .profilePicture,
           view: AnyView(ProfilePictureWireframeView())),
-        amount: 1),
+        currentAmount: 1),
       TrailingDockItem(
         id: 2,
         component: ComponentItem(
           type: .image,
           view: AnyView(ImageWireframeView())),
-        amount: 0),
+        currentAmount: 0),
       TrailingDockItem(
         id: 3,
         component: ComponentItem(
           type: .imageCaption,
           view: AnyView(ImageCaptionWireframeView())),
-        amount: 0)
+        currentAmount: 0)
     ])
     .previewInterfaceOrientation(.landscapeLeft)
   }

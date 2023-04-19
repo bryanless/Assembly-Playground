@@ -24,13 +24,13 @@ struct TrailingDockItemView<ComponentType>: View {
         .padding()
         .background(.gray)
         .cornerRadius(RoundedShape.medium)
-        .opacity(item.amount == 0 ? 0 : 1)
+        .opacity(item.currentAmount == 0 ? 0 : 1)
 
-      Text(item.amount.description)
+      Text(item.currentAmount.description)
         .frame(maxWidth: 30, maxHeight: 30)
         .background(.blue)
         .cornerRadius(RoundedShape.small)
-        .opacity(item.amount < 2 ? 0 : 1)
+        .opacity(item.currentAmount < 2 ? 0 : 1)
     }
     .cornerRadius(RoundedShape.medium)
     .padding(.trailing, 20)
@@ -44,8 +44,7 @@ struct TrailingDockItemView_Previews: PreviewProvider {
         id: 0,
         component: ComponentItem(
           type: .imageCaption,
-          view: AnyView(ImageCaptionWireframeView())),
-        amount: 0))
+          view: AnyView(ImageCaptionWireframeView()))))
       .previewLayout(.sizeThatFits)
       .padding()
       .previewDisplayName("Empty Dock Item")
@@ -54,8 +53,7 @@ struct TrailingDockItemView_Previews: PreviewProvider {
         id: 0,
         component: ComponentItem(
           type: .imageCaption,
-          view: AnyView(ImageCaptionWireframeView())),
-        amount: 1))
+          view: AnyView(ImageCaptionWireframeView()))))
       .previewLayout(.sizeThatFits)
       .padding()
       .previewDisplayName("Dock Item")

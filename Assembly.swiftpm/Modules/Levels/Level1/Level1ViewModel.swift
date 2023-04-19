@@ -19,34 +19,46 @@ class Level1ViewModel: ObservableObject {
         component: ComponentItem<Level1ComponentEnum>(
           type: .navigationTitle,
           view: AnyView(NavigationTitleWireframeView())),
-        amount: 0),
+        currentAmount: 0,
+        maximumAmount: 1),
       TrailingDockItem(
         id: 1,
         component: ComponentItem<Level1ComponentEnum>(
           type: .profilePicture,
           view: AnyView(ProfilePictureWireframeView())),
-        amount: 0),
+        currentAmount: 0,
+        maximumAmount: 1),
       TrailingDockItem(
         id: 2,
         component: ComponentItem<Level1ComponentEnum>(
           type: .image,
           view: AnyView(ImageWireframeView())),
-        amount: 0),
+        currentAmount: 0,
+        maximumAmount: 6),
       TrailingDockItem(
         id: 3,
         component: ComponentItem<Level1ComponentEnum>(
           type: .imageCaption,
           view: AnyView(ImageCaptionWireframeView())),
-        amount: 0),
+        currentAmount: 0,
+        maximumAmount: 6),
     ]) {
       self.isAssembleMode = isAssembleMode
       self.trailingDockItems = trailingDockItems
     }
   
   func onComponentTap(componentType: Level1ComponentEnum) {
+    // Add component currentAmount
     if let index = trailingDockItems.firstIndex(where: { $0.component.type == componentType }) {
       withAnimation {
-        trailingDockItems[index].amount += 1
+        trailingDockItems[index].currentAmount += 1
+      }
+    }
+
+    // End disassemble mode when all components are disassembled
+    if trailingDockItems.allSatisfy({ $0.currentAmount == $0.maximumAmount }) {
+      DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        self.endDisassembleMode()
       }
     }
   }
