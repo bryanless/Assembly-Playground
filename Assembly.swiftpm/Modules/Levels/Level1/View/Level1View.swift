@@ -19,9 +19,9 @@ struct Level1View: View {
             guideCanvas
           }
           mainCanvas
-          if !viewModel.isAssembleMode {
-            disassembleCanvas
-          }
+//          if !viewModel.isAssembleMode {
+//            disassembleCanvas
+//          }
           trailingDock
         }
         Button("end disassemble") {
@@ -52,7 +52,7 @@ extension Level1View {
       Level1MainCanvas { componentType in
         viewModel.onComponentTap(componentType: componentType)
       }
-        .padding(Space.extraLarge)
+      .padding(Space.extraLarge)
     }
   }
 
@@ -64,7 +64,13 @@ extension Level1View {
 
   /// Shows the list of components and tools that are available
   var trailingDock: some View {
-    TrailingDockView<Level1ComponentEnum>(items: viewModel.trailingDockItems)
+    TrailingDockView<Level1ComponentEnum>(
+      selectedIndex: $viewModel.selectedDockItemIndex,
+      items: viewModel.trailingDockItems,
+      onItemTap: { componentType in
+        viewModel.onTrailingDockItemTap(componentType: componentType)
+      })
+    .disabled(!viewModel.isAssembleMode)
   }
 }
 

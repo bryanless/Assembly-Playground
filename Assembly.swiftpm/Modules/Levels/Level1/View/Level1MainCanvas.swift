@@ -13,18 +13,21 @@ struct Level1MainCanvas: View {
   @State var isImageHidden: [Bool]
   @State var isImageCaptionHidden: [Bool]
   var onComponentTap: (Level1ComponentEnum) -> Void
+  var onCanvasTap: () -> Void
 
   init(
     isNavigationTitleHidden: Bool = false,
     isProfilePictureHidden: Bool = false,
     isImageHidden: [Bool] = Array(repeating: false, count: 6),
     isImageCaptionHidden: [Bool] = Array(repeating: false, count: 6),
-    onComponentTap: @escaping (Level1ComponentEnum) -> Void) {
+    onComponentTap: @escaping (Level1ComponentEnum) -> Void,
+    onCanvasTap: @escaping () -> Void) {
       self.isNavigationTitleHidden = isNavigationTitleHidden
       self.isProfilePictureHidden = isProfilePictureHidden
       self.isImageHidden = isImageHidden
       self.isImageCaptionHidden = isImageCaptionHidden
       self.onComponentTap = onComponentTap
+      self.onCanvasTap = onCanvasTap
     }
 
   var body: some View {
@@ -39,10 +42,18 @@ struct Level1MainCanvas: View {
     .padding()
     .background(.black)
     .cornerRadius(24)
+    .gesture(tapGesture)
   }
 }
 
 extension Level1MainCanvas {
+  var tapGesture: some Gesture {
+    TapGesture()
+      .onEnded {
+
+      }
+  }
+
   var navigationBar: some View {
     HStack {
       NavigationTitleWireframeView(isHidden: $isNavigationTitleHidden) { _ in
@@ -104,6 +115,9 @@ extension Level1MainCanvas {
 struct Level1MainCanvas_Previews: PreviewProvider {
   static var previews: some View {
     Level1MainCanvas { componentType in
+
+    } onCanvasTap: {
+
     }
     .previewInterfaceOrientation(.landscapeLeft)
   }
