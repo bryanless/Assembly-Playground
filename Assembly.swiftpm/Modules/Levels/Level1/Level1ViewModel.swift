@@ -69,11 +69,11 @@ class Level1ViewModel: ObservableObject {
     }
 
     // End assemble mode when canvas is filled
-//    if trailingDockItems.allSatisfy({ $0.currentAmount == $0.maximumAmount }) {
-//      DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//        self.endDisassembleMode()
-//      }
-//    }
+    if trailingDockItems.allSatisfy({ $0.placedAmount == $0.maximumAmount }) {
+      DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        print("Congrats")
+      }
+    }
   }
 
   func onPlacedComponentAssembleTap(componentType: Level1ComponentEnum) {
@@ -85,6 +85,7 @@ class Level1ViewModel: ObservableObject {
       if let index = trailingDockItems.firstIndex(where: { $0.component.type == componentType }) {
         withAnimation {
           trailingDockItems[index].currentAmount += 1
+          trailingDockItems[index].placedAmount -= 1
         }
       }
     }
@@ -107,7 +108,6 @@ class Level1ViewModel: ObservableObject {
   }
 
   func onTrailingDockItemTap(componentType: Level1ComponentEnum) {
-    print("current selected index: \(selectedDockItemIndex)")
     switch selectedToolItem {
     case .none:
       break
@@ -129,7 +129,10 @@ class Level1ViewModel: ObservableObject {
                 || selectedDockItemIndex == 3) {
           // Merge success
           // Remove the first selected component
-          trailingDockItems[previousSelectedDockItemIndex].currentAmount = 0
+          trailingDockItems.remove(at: previousSelectedDockItemIndex)
+          if previousSelectedDockItemIndex < selectedDockItemIndex {
+            selectedDockItemIndex -= 1
+          }
           // Replace the last selected component with a merged component
           trailingDockItems[selectedDockItemIndex] = TrailingDockItem(
             id: 4,
