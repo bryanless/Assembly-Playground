@@ -64,9 +64,14 @@ class Level1ViewModel: ObservableObject {
   }
 
   func endDisassembleMode() {
-    // Show guide canvas, hide disassemble canvas, show trailing dock
+    // Show guide canvas, hide disassemble canvas
     withAnimation {
       isAssembleMode = true
+    }
+
+    // Reset all component amount to 1
+    for index in 0..<trailingDockItems.count {
+      trailingDockItems[index].currentAmount = 1
     }
   }
 }
