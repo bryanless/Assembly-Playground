@@ -50,7 +50,7 @@ extension Level1MainCanvas {
   var tapGesture: some Gesture {
     TapGesture()
       .onEnded {
-
+        onCanvasTap()
       }
   }
 
@@ -115,9 +115,9 @@ extension Level1MainCanvas {
 struct Level1MainCanvas_Previews: PreviewProvider {
   static var previews: some View {
     Level1MainCanvas { componentType in
-
+      print("Component tapped")
     } onCanvasTap: {
-
+      print("Canvas tapped")
     }
     .previewInterfaceOrientation(.landscapeLeft)
   }

@@ -57,6 +57,15 @@ class Level1ViewModel: ObservableObject {
     }
   }
 
+  func onMainCanvasTap() {
+    // Enable tap only in assemble mode
+    guard selectedDockItemIndex >= 0 else {
+      return
+    }
+
+    print("tapped")
+  }
+
   func onTrailingDockItemTap(componentType: Level1ComponentEnum) {
     print(selectedDockItemIndex.description)
     print(componentType)

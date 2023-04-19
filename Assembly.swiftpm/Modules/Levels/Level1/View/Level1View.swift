@@ -51,6 +51,8 @@ extension Level1View {
         .foregroundColor(.mint)
       Level1MainCanvas { componentType in
         viewModel.onComponentTap(componentType: componentType)
+      } onCanvasTap: {
+        viewModel.onMainCanvasTap()
       }
       .padding(Space.extraLarge)
     }
