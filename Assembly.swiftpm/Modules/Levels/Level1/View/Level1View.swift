@@ -41,7 +41,8 @@ extension Level1View {
         .foregroundColor(.blue)
       Level1AssembleCanvas(
         selectedToolItem: $viewModel.selectedToolItem,
-        selectedDockIndex: $viewModel.selectedDockItemIndex) { componentType in
+        selectedDockIndex: $viewModel.selectedDockItemIndex,
+        isFigureExists: $viewModel.isFigureExists) { componentType in
         viewModel.onPlaceholderComponentAssembleTap(componentType: componentType)
       } onPlacedTap: { componentType in
         viewModel.onPlacedComponentAssembleTap(componentType: componentType)

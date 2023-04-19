@@ -20,6 +20,7 @@ struct ImageCaptionWireframeAssembleView: View {
       self.onPlaceholderTap = onPlaceholderTap
       self.onPlacedTap = onPlacedTap
     }
+  
   var body: some View {
     if isPlaced {
       ImageCaptionWireframeView() { componentType in

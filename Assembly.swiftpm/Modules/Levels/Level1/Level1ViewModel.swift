@@ -40,6 +40,7 @@ class Level1ViewModel: ObservableObject {
         view: AnyView(ImageCaptionWireframeView())),
       maximumAmount: 6),
   ]
+  @Published var isFigureExists: Bool = false
 
   func onComponentTap(componentType: Level1ComponentEnum) {
     // Add component currentAmount
@@ -58,7 +59,7 @@ class Level1ViewModel: ObservableObject {
   }
 
   func onPlaceholderComponentAssembleTap(componentType: Level1ComponentEnum) {
-    // Add component currentAmount
+    // Reduce component currentAmount
     if let index = trailingDockItems.firstIndex(where: { $0.component.type == componentType }) {
       withAnimation {
         selectedDockItemIndex = -1
@@ -106,6 +107,7 @@ class Level1ViewModel: ObservableObject {
   }
 
   func onTrailingDockItemTap(componentType: Level1ComponentEnum) {
+    print("current selected index: \(selectedDockItemIndex)")
     switch selectedToolItem {
     case .none:
       break
@@ -139,6 +141,8 @@ class Level1ViewModel: ObservableObject {
 
           // Remove currently active tool
           selectedToolItem = nil
+
+          isFigureExists = true
         }
 
         if (previousSelectedDockItemIndex != -1) {
