@@ -57,6 +57,23 @@ class Level1ViewModel: ObservableObject {
     }
   }
 
+  func onComponentAssembleTap(componentType: Level1ComponentEnum) {
+    // Add component currentAmount
+    if let index = trailingDockItems.firstIndex(where: { $0.component.type == componentType }) {
+      withAnimation {
+        selectedDockItemIndex = -1
+        trailingDockItems[index].currentAmount = 0
+      }
+    }
+
+    // End assemble mode when canvas is filled
+//    if trailingDockItems.allSatisfy({ $0.currentAmount == $0.maximumAmount }) {
+//      DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+//        self.endDisassembleMode()
+//      }
+//    }
+  }
+
   func onMainCanvasTap() {
     // Enable tap only in assemble mode
     guard selectedDockItemIndex >= 0 else {

@@ -1,35 +1,35 @@
 //
-//  Level1MainCanvas.swift
+//  Level1AssembleCanvas.swift
 //  
 //
-//  Created by Bryan on 18/04/23.
+//  Created by Bryan on 14/04/23.
 //
 
 import SwiftUI
 
-struct Level1MainCanvas: View {
+struct Level1AssembleCanvas: View {
+  @Binding var selectedDockIndex: Int
   @State var isNavigationTitleHidden: Bool
   @State var isProfilePictureHidden: Bool
   @State var isImageHidden: [Bool]
   @State var isImageCaptionHidden: [Bool]
   var onComponentTap: (Level1ComponentEnum) -> Void
-  var onCanvasTap: () -> Void
 
   init(
+    selectedDockIndex: Binding<Int>,
     isNavigationTitleHidden: Bool = false,
     isProfilePictureHidden: Bool = false,
     isImageHidden: [Bool] = Array(repeating: false, count: 6),
     isImageCaptionHidden: [Bool] = Array(repeating: false, count: 6),
-    onComponentTap: @escaping (Level1ComponentEnum) -> Void,
-    onCanvasTap: @escaping () -> Void) {
+    onComponentTap: @escaping (Level1ComponentEnum) -> Void) {
+      _selectedDockIndex = selectedDockIndex
       self.isNavigationTitleHidden = isNavigationTitleHidden
       self.isProfilePictureHidden = isProfilePictureHidden
       self.isImageHidden = isImageHidden
       self.isImageCaptionHidden = isImageCaptionHidden
       self.onComponentTap = onComponentTap
-      self.onCanvasTap = onCanvasTap
     }
-
+  
   var body: some View {
     VStack(spacing: Space.large) {
       navigationBar
@@ -42,34 +42,28 @@ struct Level1MainCanvas: View {
     .padding()
     .background(.black)
     .cornerRadius(24)
-    .gesture(tapGesture)
   }
 }
 
-extension Level1MainCanvas {
-  var tapGesture: some Gesture {
-    TapGesture()
-      .onEnded {
-        onCanvasTap()
-      }
-  }
-
+extension Level1AssembleCanvas {
   var navigationBar: some View {
     HStack {
-      NavigationTitleWireframeView(isHidden: $isNavigationTitleHidden) { componentType in
-        print("title tapped")
-        withAnimation {
-          isNavigationTitleHidden.toggle()
+      NavigationTitleWireframeAssembleView(isHidden: $isNavigationTitleHidden) { componentType in
+        if selectedDockIndex == 0 {
+          withAnimation {
+            isNavigationTitleHidden.toggle()
+          }
+          onComponentTap(componentType)
         }
-        onComponentTap(componentType)
       }
       Spacer(minLength: Space.extraLarge)
-      ProfilePictureWireframeView(isHidden: $isProfilePictureHidden) { componentType in
-        print("picture tapped")
-        withAnimation {
-          isProfilePictureHidden.toggle()
+      ProfilePictureWireframeAssembleView(isHidden: $isProfilePictureHidden) { componentType in
+        if selectedDockIndex == 1 {
+          withAnimation {
+            isProfilePictureHidden.toggle()
+          }
+          onComponentTap(componentType)
         }
-        onComponentTap(componentType)
       }
     }
   }
@@ -93,33 +87,32 @@ extension Level1MainCanvas {
 
   func gridItem(index: Int) -> some View {
     VStack(alignment: .leading) {
-      ImageWireframeView(isHidden: $isImageHidden[index]) { componentType in
-        print("Image tapped")
-        withAnimation {
-          isImageHidden[index].toggle()
+      ImageWireframeAssembleView(isHidden: $isImageHidden[index]) { componentType in
+        if selectedDockIndex == 2 {
+          withAnimation {
+            isImageHidden[index].toggle()
+          }
+          onComponentTap(componentType)
         }
-        onComponentTap(componentType)
       }
 
-      ImageCaptionWireframeView(isHidden: $isImageCaptionHidden[index]) { componentType in
-        print("Caption tapped")
-        withAnimation {
-          isImageCaptionHidden[index].toggle()
+      ImageCaptionWireframeAssembleView(isHidden: $isImageCaptionHidden[index]) { componentType in
+        if selectedDockIndex == 3 {
+          withAnimation {
+            isImageCaptionHidden[index].toggle()
+          }
+          onComponentTap(componentType)
         }
-        onComponentTap(componentType)
       }
     }
   }
 }
 
-struct Level1MainCanvas_Previews: PreviewProvider {
+struct Level1AssembleCanvas_Previews: PreviewProvider {
   static var previews: some View {
-    Level1MainCanvas { componentType in
-      print("Component tapped")
-    } onCanvasTap: {
-      print("Canvas tapped")
+    Level1AssembleCanvas(selectedDockIndex: .constant(0)) { _ in
+
     }
     .previewInterfaceOrientation(.landscapeLeft)
   }
 }
-

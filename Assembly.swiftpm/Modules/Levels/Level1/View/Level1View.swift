@@ -16,12 +16,10 @@ struct Level1View: View {
         CustomNavigationBar()
         HStack(spacing: Space.large) {
           if viewModel.isAssembleMode {
-            guideCanvas
+            assembleCanvas
+          } else {
+            mainCanvas
           }
-          mainCanvas
-//          if !viewModel.isAssembleMode {
-//            disassembleCanvas
-//          }
           trailingBar
         }
         Button("end disassemble") {
@@ -35,12 +33,14 @@ struct Level1View: View {
 
 extension Level1View {
   /// Shows the example of wireframe that needs to be completed
-  var guideCanvas: some View {
+  var assembleCanvas: some View {
     ZStack {
       Rectangle()
         .foregroundColor(.blue)
-      Level1Guide()
-        .padding(Space.extraLarge)
+      Level1AssembleCanvas(selectedDockIndex: $viewModel.selectedDockItemIndex) { componentType in
+        viewModel.onComponentAssembleTap(componentType: componentType)
+      }
+      .padding(Space.extraLarge)
     }
   }
 
