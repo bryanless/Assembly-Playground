@@ -37,8 +37,12 @@ extension Level1View {
     ZStack {
       Rectangle()
         .foregroundColor(.blue)
-      Level1AssembleCanvas(selectedDockIndex: $viewModel.selectedDockItemIndex) { componentType in
-        viewModel.onComponentAssembleTap(componentType: componentType)
+      Level1AssembleCanvas(
+        selectedToolItem: $viewModel.selectedToolItem,
+        selectedDockIndex: $viewModel.selectedDockItemIndex) { componentType in
+        viewModel.onPlaceholderComponentAssembleTap(componentType: componentType)
+      } onPlacedTap: { componentType in
+        viewModel.onPlacedComponentAssembleTap(componentType: componentType)
       }
       .padding(Space.extraLarge)
     }

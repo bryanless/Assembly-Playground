@@ -8,26 +8,32 @@
 import SwiftUI
 
 struct Level1AssembleCanvas: View {
+  @Binding var selectedToolItem: ToolItemEnum?
   @Binding var selectedDockIndex: Int
-  @State var isNavigationTitleHidden: Bool
-  @State var isProfilePictureHidden: Bool
-  @State var isImageHidden: [Bool]
-  @State var isImageCaptionHidden: [Bool]
-  var onComponentTap: (Level1ComponentEnum) -> Void
+  @State var isNavigationTitlePlaced: Bool
+  @State var isProfilePicturePlaced: Bool
+  @State var isImagePlaced: [Bool]
+  @State var isImageCaptionPlaced: [Bool]
+  var onPlaceholderTap: (Level1ComponentEnum) -> Void
+  var onPlacedTap: (Level1ComponentEnum) -> Void
 
   init(
+    selectedToolItem: Binding<ToolItemEnum?>,
     selectedDockIndex: Binding<Int>,
     isNavigationTitleHidden: Bool = false,
     isProfilePictureHidden: Bool = false,
     isImageHidden: [Bool] = Array(repeating: false, count: 6),
     isImageCaptionHidden: [Bool] = Array(repeating: false, count: 6),
-    onComponentTap: @escaping (Level1ComponentEnum) -> Void) {
+    onPlaceholderTap: @escaping (Level1ComponentEnum) -> Void,
+    onPlacedTap: @escaping (Level1ComponentEnum) -> Void) {
+      _selectedToolItem = selectedToolItem
       _selectedDockIndex = selectedDockIndex
-      self.isNavigationTitleHidden = isNavigationTitleHidden
-      self.isProfilePictureHidden = isProfilePictureHidden
-      self.isImageHidden = isImageHidden
-      self.isImageCaptionHidden = isImageCaptionHidden
-      self.onComponentTap = onComponentTap
+      self.isNavigationTitlePlaced = isNavigationTitleHidden
+      self.isProfilePicturePlaced = isProfilePictureHidden
+      self.isImagePlaced = isImageHidden
+      self.isImageCaptionPlaced = isImageCaptionHidden
+      self.onPlaceholderTap = onPlaceholderTap
+      self.onPlacedTap = onPlacedTap
     }
   
   var body: some View {
@@ -48,21 +54,35 @@ struct Level1AssembleCanvas: View {
 extension Level1AssembleCanvas {
   var navigationBar: some View {
     HStack {
-      NavigationTitleWireframeAssembleView(isHidden: $isNavigationTitleHidden) { componentType in
+      NavigationTitleWireframeAssembleView(isPlaced: $isNavigationTitlePlaced) { componentType in
         if selectedDockIndex == 0 {
           withAnimation {
-            isNavigationTitleHidden.toggle()
+            isNavigationTitlePlaced.toggle()
           }
-          onComponentTap(componentType)
+          onPlaceholderTap(componentType)
+        }
+      } onPlacedTap: { componentType in
+        if selectedToolItem == .remove {
+          withAnimation {
+            isNavigationTitlePlaced.toggle()
+          }
+          onPlacedTap(componentType)
         }
       }
       Spacer(minLength: Space.extraLarge)
-      ProfilePictureWireframeAssembleView(isHidden: $isProfilePictureHidden) { componentType in
+      ProfilePictureWireframeAssembleView(isPlaced: $isProfilePicturePlaced) { componentType in
         if selectedDockIndex == 1 {
           withAnimation {
-            isProfilePictureHidden.toggle()
+            isProfilePicturePlaced.toggle()
           }
-          onComponentTap(componentType)
+          onPlaceholderTap(componentType)
+        }
+      } onPlacedTap: { componentType in
+        if selectedToolItem == .remove {
+          withAnimation {
+            isProfilePicturePlaced.toggle()
+          }
+          onPlacedTap(componentType)
         }
       }
     }
@@ -87,21 +107,36 @@ extension Level1AssembleCanvas {
 
   func gridItem(index: Int) -> some View {
     VStack(alignment: .leading) {
-      ImageWireframeAssembleView(isHidden: $isImageHidden[index]) { componentType in
+      ImageWireframeAssembleView(isPlaced: $isImagePlaced[index]) { componentType in
         if selectedDockIndex == 2 {
           withAnimation {
-            isImageHidden[index].toggle()
+            isImagePlaced[index].toggle()
           }
-          onComponentTap(componentType)
+          onPlaceholderTap(componentType)
+        }
+      } onPlacedTap: { componentType in
+        if selectedToolItem == .remove {
+          withAnimation {
+            isImagePlaced[index].toggle()
+          }
+          onPlacedTap(componentType)
         }
       }
 
-      ImageCaptionWireframeAssembleView(isHidden: $isImageCaptionHidden[index]) { componentType in
+      ImageCaptionWireframeAssembleView(isPlaced: $isImageCaptionPlaced[index]) { componentType in
         if selectedDockIndex == 3 {
           withAnimation {
-            isImageCaptionHidden[index].toggle()
+            isImageCaptionPlaced[index].toggle()
           }
-          onComponentTap(componentType)
+          onPlaceholderTap(componentType)
+        }
+      } onPlacedTap: { componentType in
+        print("Placed \(componentType) tapped")
+        if selectedToolItem == .remove {
+          withAnimation {
+            isImageCaptionPlaced[index].toggle()
+          }
+          onPlacedTap(componentType)
         }
       }
     }
@@ -110,7 +145,11 @@ extension Level1AssembleCanvas {
 
 struct Level1AssembleCanvas_Previews: PreviewProvider {
   static var previews: some View {
-    Level1AssembleCanvas(selectedDockIndex: .constant(0)) { _ in
+    Level1AssembleCanvas(
+      selectedToolItem: .constant(.duplicate),
+      selectedDockIndex: .constant(0)) { _ in
+
+    } onPlacedTap: { _ in
 
     }
     .previewInterfaceOrientation(.landscapeLeft)

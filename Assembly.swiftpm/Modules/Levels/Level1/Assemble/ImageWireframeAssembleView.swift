@@ -9,18 +9,23 @@ import SwiftUI
 
 struct ImageWireframeAssembleView: View {
   @Binding var isPlaced: Bool
-  var onTap: (Level1ComponentEnum) -> Void
+  var onPlaceholderTap: (Level1ComponentEnum) -> Void
+  var onPlacedTap: (Level1ComponentEnum) -> Void
 
   init(
-    isHidden: Binding<Bool> = .constant(false),
-    onTap: @escaping (Level1ComponentEnum) -> Void = { _ in }) {
-      _isPlaced = isHidden
-      self.onTap = onTap
+    isPlaced: Binding<Bool> = .constant(false),
+    onPlaceholderTap: @escaping (Level1ComponentEnum) -> Void = { _ in },
+    onPlacedTap: @escaping (Level1ComponentEnum) -> Void = { _ in }) {
+      _isPlaced = isPlaced
+      self.onPlaceholderTap = onPlaceholderTap
+      self.onPlacedTap = onPlacedTap
     }
 
   var body: some View {
     if isPlaced {
-     ImageWireframeView()
+     ImageWireframeView() { componentType in
+       onPlacedTap(componentType)
+     }
    } else {
      RoundedRectangle(cornerRadius: RoundedShape.small)
        .aspectRatio(4/3, contentMode: .fit)
@@ -32,7 +37,7 @@ struct ImageWireframeAssembleView: View {
            .foregroundColor(.blue)
        }
        .onTapGesture {
-         onTap(.image)
+         onPlaceholderTap(.image)
        }
    }
   }

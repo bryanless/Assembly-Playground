@@ -13,7 +13,7 @@ struct MainMenuView: View {
       VStack {
         Text("Assembly")
         NavigationLink {
-          LevelSelectionView()
+          Level1View()
         } label: {
           Text("Start")
         }.buttonStyle(.borderedProminent)

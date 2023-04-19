@@ -9,18 +9,23 @@ import SwiftUI
 
 struct ProfilePictureWireframeAssembleView: View {
   @Binding var isPlaced: Bool
-  var onTap: (Level1ComponentEnum) -> Void
+  var onPlaceholderTap: (Level1ComponentEnum) -> Void
+  var onPlacedTap: (Level1ComponentEnum) -> Void
 
   init(
-    isHidden: Binding<Bool> = .constant(false),
-    onTap: @escaping (Level1ComponentEnum) -> Void = { _ in }) {
-      _isPlaced = isHidden
-      self.onTap = onTap
+    isPlaced: Binding<Bool> = .constant(false),
+    onPlaceholderTap: @escaping (Level1ComponentEnum) -> Void = { _ in },
+    onPlacedTap: @escaping (Level1ComponentEnum) -> Void = { _ in }) {
+      _isPlaced = isPlaced
+      self.onPlaceholderTap = onPlaceholderTap
+      self.onPlacedTap = onPlacedTap
     }
 
   var body: some View {
     if isPlaced {
-     ProfilePictureWireframeView()
+     ProfilePictureWireframeView() { componentType in
+       onPlacedTap(componentType)
+     }
    } else {
      Circle()
        .contentShape(Circle())
@@ -32,7 +37,7 @@ struct ProfilePictureWireframeAssembleView: View {
        }
        .frame(maxWidth: 40)
        .onTapGesture {
-         onTap(.profilePicture)
+         onPlaceholderTap(.profilePicture)
        }
    }
   }

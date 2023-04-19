@@ -58,7 +58,7 @@ class Level1ViewModel: ObservableObject {
     }
   }
 
-  func onComponentAssembleTap(componentType: Level1ComponentEnum) {
+  func onPlaceholderComponentAssembleTap(componentType: Level1ComponentEnum) {
     // Add component currentAmount
     if let index = trailingDockItems.firstIndex(where: { $0.component.type == componentType }) {
       withAnimation {
@@ -75,22 +75,45 @@ class Level1ViewModel: ObservableObject {
 //    }
   }
 
+  func onPlacedComponentAssembleTap(componentType: Level1ComponentEnum) {
+    print("Placed \(componentType)")
+    switch selectedToolItem {
+    case .none:
+      return
+    case .duplicate: break
+    case .remove:
+      if let index = trailingDockItems.firstIndex(where: { $0.component.type == componentType }) {
+        withAnimation {
+          trailingDockItems[index].currentAmount += 1
+        }
+      }
+    }
+  }
+
   func onMainCanvasTap() {
     // Enable tap only in assemble mode
     guard selectedDockItemIndex >= 0 else {
       return
     }
 
-    print("tapped")
+    print("Canvas tapped")
   }
 
   func onTrailingToolItemTap(toolRole: ToolItemEnum) {
-    
+    // Remove currently active dock item
+    if selectedDockItemIndex >= 0 {
+      selectedDockItemIndex = -1
+    }
   }
 
   func onTrailingDockItemTap(componentType: Level1ComponentEnum) {
     print(selectedDockItemIndex.description)
     print(componentType)
+
+    // Remove currently active tool only if it is remove tool
+    if selectedToolItem != nil {
+      selectedToolItem = nil
+    }
   }
 
   func endDisassembleMode() {
