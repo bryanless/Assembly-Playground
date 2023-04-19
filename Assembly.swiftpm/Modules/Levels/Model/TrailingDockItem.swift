@@ -9,5 +9,6 @@ struct TrailingDockItem<ComponentType>: Identifiable {
   let id: Int
   var component: ComponentItem<ComponentType>
   var currentAmount: Int = 0
+  var placedAmount: Int = 0
   var maximumAmount: Int = 0
 }

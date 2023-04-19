@@ -8,6 +8,8 @@
 import SwiftUI
 
 class Level1ViewModel: ObservableObject {
+  private var previousSelectedDockItemIndex: Int = -1
+
   @Published var isAssembleMode: Bool = false
   @Published var selectedToolItem: ToolItemEnum?
   @Published var duplicateToolAmount: Int = 5
@@ -18,28 +20,24 @@ class Level1ViewModel: ObservableObject {
       component: ComponentItem<Level1ComponentEnum>(
         type: .navigationTitle,
         view: AnyView(NavigationTitleWireframeView())),
-      currentAmount: 0,
       maximumAmount: 1),
     TrailingDockItem(
       id: 1,
       component: ComponentItem<Level1ComponentEnum>(
         type: .profilePicture,
         view: AnyView(ProfilePictureWireframeView())),
-      currentAmount: 0,
       maximumAmount: 1),
     TrailingDockItem(
       id: 2,
       component: ComponentItem<Level1ComponentEnum>(
         type: .image,
         view: AnyView(ImageWireframeView())),
-      currentAmount: 0,
       maximumAmount: 6),
     TrailingDockItem(
       id: 3,
       component: ComponentItem<Level1ComponentEnum>(
         type: .imageCaption,
         view: AnyView(ImageCaptionWireframeView())),
-      currentAmount: 0,
       maximumAmount: 6),
   ]
 
@@ -65,6 +63,7 @@ class Level1ViewModel: ObservableObject {
       withAnimation {
         selectedDockItemIndex = -1
         trailingDockItems[index].currentAmount -= 1
+        trailingDockItems[index].placedAmount += 1
       }
     }
 
@@ -77,12 +76,10 @@ class Level1ViewModel: ObservableObject {
   }
 
   func onPlacedComponentAssembleTap(componentType: Level1ComponentEnum) {
-    print("Placed \(componentType)")
     switch selectedToolItem {
-    case .none:
-      return
-    case .duplicate: break
-    case .merge: break
+    case .none: return
+    case .duplicate: return
+    case .merge: return
     case .remove:
       if let index = trailingDockItems.firstIndex(where: { $0.component.type == componentType }) {
         withAnimation {
@@ -109,9 +106,6 @@ class Level1ViewModel: ObservableObject {
   }
 
   func onTrailingDockItemTap(componentType: Level1ComponentEnum) {
-    print(selectedDockItemIndex.description)
-    print(componentType)
-
     switch selectedToolItem {
     case .none:
       break
@@ -120,22 +114,55 @@ class Level1ViewModel: ObservableObject {
         withAnimation {
           duplicateToolAmount -= 1
           trailingDockItems[index].currentAmount += 1
+
+          // Remove currently active tool
+          selectedToolItem = nil
         }
       }
-    case .merge: break
+    case .merge:
+      withAnimation {
+        if (previousSelectedDockItemIndex == 2
+            || previousSelectedDockItemIndex == 3)
+            && (selectedDockItemIndex == 2
+                || selectedDockItemIndex == 3) {
+          // Merge success
+          // Remove the first selected component
+          trailingDockItems[previousSelectedDockItemIndex].currentAmount = 0
+          // Replace the last selected component with a merged component
+          trailingDockItems[selectedDockItemIndex] = TrailingDockItem(
+            id: 4,
+            component: ComponentItem<Level1ComponentEnum>(
+              type: .figure,
+              view: AnyView(FigureWireframeView())),
+            currentAmount: 1,
+            maximumAmount: 6)
+
+          // Remove currently active tool
+          selectedToolItem = nil
+        }
+
+        if (previousSelectedDockItemIndex != -1) {
+          // Merge failed, reset selection
+          previousSelectedDockItemIndex = -1
+          selectedDockItemIndex = -1
+        }
+      }
+      // Keep first dock item that is selected
+      previousSelectedDockItemIndex = selectedDockItemIndex
     case .remove:
-      if let index = trailingDockItems.firstIndex(where: { $0.component.type == componentType }) {
-        if trailingDockItems[index].currentAmount > 1 {
-          withAnimation {
+      withAnimation {
+        if let index = trailingDockItems.firstIndex(where: { $0.component.type == componentType }) {
+          if trailingDockItems[index].currentAmount > 1
+              || trailingDockItems[index].placedAmount > 0 {
+            selectedDockItemIndex = -1
             duplicateToolAmount += 1
             trailingDockItems[index].currentAmount -= 1
           }
         }
+        // Remove currently active tool
+        selectedToolItem = nil
       }
     }
-
-    // Remove currently active tool
-    selectedToolItem = nil
   }
 
   func endDisassembleMode() {

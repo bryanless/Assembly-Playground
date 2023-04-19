@@ -6,5 +6,6 @@
 //
 
 enum Level1ComponentEnum {
-  case navigationTitle, profilePicture, image, imageCaption
+  case navigationTitle, profilePicture, image
+  case imageCaption, figure
 }

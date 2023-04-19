@@ -13,7 +13,12 @@ struct Level1View: View {
   var body: some View {
     HiddenNavBarView {
       VStack(spacing: Space.extraLarge) {
-        CustomNavigationBar()
+        HStack {
+          CustomNavigationBar()
+          Button("end disassemble") {
+            viewModel.endDisassembleMode()
+          }.buttonStyle(.borderedProminent)
+        }
         HStack(spacing: Space.large) {
           if viewModel.isAssembleMode {
             assembleCanvas
@@ -22,9 +27,6 @@ struct Level1View: View {
           }
           trailingBar
         }
-        Button("end disassemble") {
-          viewModel.endDisassembleMode()
-        }.buttonStyle(.borderedProminent)
       }
     }
     .padding()
