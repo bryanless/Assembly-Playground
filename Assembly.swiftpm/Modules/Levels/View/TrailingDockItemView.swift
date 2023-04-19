@@ -23,23 +23,23 @@ struct TrailingDockItemView<ComponentType>: View {
 
   var body: some View {
     ZStack(alignment: .topTrailing) {
-      RoundedRectangle(cornerRadius: RoundedShape.medium)
-        .foregroundColor(.gray)
-        .frame(width: 100, height: 100)
-        .padding()
-        .background(.gray)
-        .cornerRadius(RoundedShape.medium)
+      ZStack(alignment: .center) {
+        RoundedRectangle(cornerRadius: RoundedShape.medium)
+          .foregroundColor(.gray)
+          .padding()
+          .background(.gray)
+          .cornerRadius(RoundedShape.medium)
 
-      item.component.view
-        .frame(width: 100, height: 100)
-        .padding()
-        .background(.gray)
-        .cornerRadius(RoundedShape.medium)
-        .opacity(item.currentAmount == 0 ? 0 : 1)
-        .simultaneousGesture(tapGesture)
+        item.component.view
+          .padding()
+          .background(.gray)
+          .cornerRadius(RoundedShape.medium)
+          .opacity(item.currentAmount == 0 ? 0 : 1)
+          .simultaneousGesture(tapGesture)
+      }
 
       Text(item.currentAmount.description)
-        .frame(maxWidth: 30, maxHeight: 30)
+        .frame(maxWidth: 40, maxHeight: 40)
         .background(.blue)
         .cornerRadius(RoundedShape.small)
         .opacity(item.currentAmount < 2 ? 0 : 1)
