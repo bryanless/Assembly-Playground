@@ -41,6 +41,7 @@ class Level1ViewModel: ObservableObject {
       maximumAmount: 6),
   ]
   @Published var isFigureExists: Bool = false
+  @Published var isLevelComplete: Bool = false
 
   func onComponentTap(componentType: Level1ComponentEnum) {
     // Add component currentAmount
@@ -71,7 +72,9 @@ class Level1ViewModel: ObservableObject {
     // End assemble mode when canvas is filled
     if trailingDockItems.allSatisfy({ $0.placedAmount == $0.maximumAmount }) {
       DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-        print("Congrats")
+        withAnimation {
+          self.isLevelComplete = true
+        }
       }
     }
   }

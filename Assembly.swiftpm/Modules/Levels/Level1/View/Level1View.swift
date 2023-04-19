@@ -12,21 +12,10 @@ struct Level1View: View {
 
   var body: some View {
     HiddenNavBarView {
-      VStack(spacing: Space.extraLarge) {
-        HStack {
-          CustomNavigationBar()
-          Button("end disassemble") {
-            viewModel.endDisassembleMode()
-          }.buttonStyle(.borderedProminent)
-        }
-        HStack(spacing: Space.large) {
-          if viewModel.isAssembleMode {
-            assembleCanvas
-          } else {
-            mainCanvas
-          }
-          trailingBar
-        }
+      if viewModel.isLevelComplete {
+        LevelCompleteView()
+      } else {
+        content
       }
     }
     .padding()
@@ -34,6 +23,25 @@ struct Level1View: View {
 }
 
 extension Level1View {
+  var content: some View {
+    VStack(spacing: Space.extraLarge) {
+      HStack {
+        CustomNavigationBar()
+        Button("end disassemble") {
+          viewModel.endDisassembleMode()
+        }.buttonStyle(.borderedProminent)
+      }
+      HStack(spacing: Space.large) {
+        if viewModel.isAssembleMode {
+          assembleCanvas
+        } else {
+          mainCanvas
+        }
+        trailingBar
+      }
+    }
+  }
+
   /// Shows the example of wireframe that needs to be completed
   var assembleCanvas: some View {
     ZStack {
