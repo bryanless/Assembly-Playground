@@ -9,6 +9,8 @@ import SwiftUI
 
 class Level1ViewModel: ObservableObject {
   @Published var isAssembleMode: Bool = false
+  @Published var selectedToolItem: ToolItemEnum?
+  @Published var selectedDockItemIndex: Int = -1
   @Published var trailingDockItems: [TrailingDockItem<Level1ComponentEnum>] = [
     TrailingDockItem(
       id: 0,
@@ -39,7 +41,6 @@ class Level1ViewModel: ObservableObject {
       currentAmount: 0,
       maximumAmount: 6),
   ]
-  @Published var selectedDockItemIndex: Int = -1
 
   func onComponentTap(componentType: Level1ComponentEnum) {
     // Add component currentAmount
@@ -62,7 +63,7 @@ class Level1ViewModel: ObservableObject {
     if let index = trailingDockItems.firstIndex(where: { $0.component.type == componentType }) {
       withAnimation {
         selectedDockItemIndex = -1
-        trailingDockItems[index].currentAmount = 0
+        trailingDockItems[index].currentAmount -= 1
       }
     }
 
@@ -81,6 +82,10 @@ class Level1ViewModel: ObservableObject {
     }
 
     print("tapped")
+  }
+
+  func onTrailingToolItemTap(toolRole: ToolItemEnum) {
+    
   }
 
   func onTrailingDockItemTap(componentType: Level1ComponentEnum) {

@@ -28,8 +28,10 @@ struct TrailingDockView<ComponentType>: View {
           item: item,
           isSelected: selectedIndex == item.id,
           onTap: { componentType in
-            selectedIndex = selectedIndex == item.id ? -1 : item.id
-            onItemTap(componentType)
+            if item.currentAmount > 0 {
+              selectedIndex = selectedIndex == item.id ? -1 : item.id
+              onItemTap(componentType)
+            }
           })
       }
     }

@@ -67,7 +67,13 @@ extension Level1View {
   /// Shows the list of components and tools that are available
   var trailingBar: some View {
     VStack(spacing: Space.large) {
-      TrailingToolsView()
+      if viewModel.isAssembleMode {
+        TrailingToolsView(
+          selectedTool: $viewModel.selectedToolItem,
+          duplicateAmount: 6) { toolRole in
+            viewModel.onTrailingToolItemTap(toolRole: toolRole)
+          }
+      }
       TrailingDockView<Level1ComponentEnum>(
         selectedIndex: $viewModel.selectedDockItemIndex,
         items: viewModel.trailingDockItems,

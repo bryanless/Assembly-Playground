@@ -47,7 +47,7 @@ struct TrailingDockItemView<ComponentType>: View {
     .cornerRadius(RoundedShape.medium)
     .overlay {
       RoundedRectangle(cornerRadius: RoundedShape.medium)
-        .stroke(Color.yellow, lineWidth: isSelected ? 8 : 0)
+        .stroke(Color.yellow, lineWidth: isSelected ? 4 : 0)
     }
     .gesture(tapGesture)
   }

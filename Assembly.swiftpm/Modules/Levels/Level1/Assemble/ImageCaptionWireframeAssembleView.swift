@@ -37,11 +37,11 @@ struct ImageCaptionWireframeAssembleView: View {
        HStack {
          VStack(alignment: .leading, spacing: Space.extraSmall) {
            RoundedRectangle(cornerRadius: RoundedShape.extraSmall)
-             .stroke(style: StrokeStyle(lineWidth: 1, dash: [8]))
+             .stroke(style: StrokeStyle(lineWidth: 2, dash: [8]))
              .foregroundColor(.blue)
              .frame(maxWidth: 100, maxHeight: 12)
            RoundedRectangle(cornerRadius: RoundedShape.extraSmall)
-             .stroke(style: StrokeStyle(lineWidth: 1, dash: [8]))
+             .stroke(style: StrokeStyle(lineWidth: 2, dash: [8]))
              .foregroundColor(.blue)
              .frame(maxWidth: 60, maxHeight: 12)
          }
