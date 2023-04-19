@@ -13,22 +13,32 @@ struct TrailingToolsView: View {
   var onItemTap: (ToolItemEnum) -> Void
 
   var body: some View {
-    HStack {
-      TrailingToolItemView(
-        iconName: "plus.square.on.square",
-        role: .duplicate,
-        roleAmount: duplicateAmount,
-        isSelected: selectedTool == .duplicate) { toolRole in
-          if duplicateAmount > 0 {
-            selectedTool = selectedTool == toolRole ? nil : .duplicate
+    VStack {
+      HStack {
+        TrailingToolItemView(
+          iconName: "plus.square.on.square",
+          role: .duplicate,
+          roleAmount: duplicateAmount,
+          isSelected: selectedTool == .duplicate) { toolRole in
+            if duplicateAmount > 0 {
+              selectedTool = selectedTool == toolRole ? nil : .duplicate
+              onItemTap(toolRole)
+            }
+          }
+        TrailingToolItemView(
+          iconName: "trash",
+          role: .remove,
+          isSelected: selectedTool == .remove) { toolRole in
+            selectedTool = selectedTool == toolRole ? nil : .remove
             onItemTap(toolRole)
           }
-        }
-      TrailingToolItemView(
-        iconName: "trash",
-        role: .remove,
-        isSelected: selectedTool == .remove) { toolRole in
-          selectedTool = selectedTool == toolRole ? nil : .remove
+      }
+      TrailingToolRowItemView(
+        iconName: "arrow.triangle.merge",
+        title: "Merge",
+        role: .merge,
+        isSelected: selectedTool == .merge) { toolRole in
+          selectedTool = selectedTool == toolRole ? nil : .merge
           onItemTap(toolRole)
         }
     }

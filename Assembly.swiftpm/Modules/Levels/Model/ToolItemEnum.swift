@@ -6,5 +6,5 @@
 //
 
 enum ToolItemEnum {
-  case duplicate, remove
+  case duplicate, merge, remove
 }

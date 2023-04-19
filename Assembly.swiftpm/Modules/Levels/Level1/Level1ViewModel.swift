@@ -82,6 +82,7 @@ class Level1ViewModel: ObservableObject {
     case .none:
       return
     case .duplicate: break
+    case .merge: break
     case .remove:
       if let index = trailingDockItems.firstIndex(where: { $0.component.type == componentType }) {
         withAnimation {
@@ -121,6 +122,7 @@ class Level1ViewModel: ObservableObject {
           trailingDockItems[index].currentAmount += 1
         }
       }
+    case .merge: break
     case .remove:
       if let index = trailingDockItems.firstIndex(where: { $0.component.type == componentType }) {
         if trailingDockItems[index].currentAmount > 1 {
