@@ -20,6 +20,7 @@ struct NavigationTitleWireframeView: View {
 
   var body: some View {
     RoundedRectangle(cornerRadius: RoundedShape.small)
+      .foregroundColor(Color("ColorTextPlaceholder"))
       .frame(maxWidth: 250, maxHeight: 20)
       .opacity(isHidden ? 0 : 1)
       .onTapGesture {

@@ -39,11 +39,11 @@ struct TrailingToolItemView: View {
 
       Text(roleAmount.description)
         .frame(maxWidth: 32, maxHeight: 32)
-        .background(.blue)
+        .background(.thinMaterial)
         .cornerRadius(RoundedShape.small)
         .opacity(roleAmount < 1 ? 0 : 1)
     }
-    .background(role == .duplicate && roleAmount < 1 ? Color.secondary : .indigo)
+    .background(role == .duplicate && roleAmount < 1 ? Color(uiColor: UIColor.secondarySystemFill) : .indigo)
     .cornerRadius(RoundedShape.medium)
     .overlay {
       RoundedRectangle(cornerRadius: RoundedShape.medium)

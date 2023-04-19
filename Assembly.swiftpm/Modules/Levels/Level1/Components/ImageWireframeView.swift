@@ -21,6 +21,7 @@ struct ImageWireframeView: View {
   var body: some View {
     RoundedRectangle(cornerRadius: RoundedShape.small)
       .aspectRatio(4/3, contentMode: .fit)
+      .foregroundColor(Color("ColorImagePlaceholder"))
       .opacity(isHidden ? 0 : 1)
       .onTapGesture {
         onTap(.image)

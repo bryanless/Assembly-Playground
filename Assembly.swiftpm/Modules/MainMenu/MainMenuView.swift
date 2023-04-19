@@ -10,12 +10,16 @@ import SwiftUI
 struct MainMenuView: View {
   var body: some View {
     HiddenNavBarView {
-      VStack {
+      VStack(spacing: 40) {
         Text("Assembly")
+          .font(.custom("", size: 64))
+          .bold()
         NavigationLink {
           Level1View()
         } label: {
           Text("Start")
+            .padding(.vertical, Space.small)
+            .padding(.horizontal, 48)
         }.buttonStyle(.borderedProminent)
       }
     }

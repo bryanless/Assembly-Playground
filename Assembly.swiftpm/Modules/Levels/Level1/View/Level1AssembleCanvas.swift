@@ -122,7 +122,6 @@ extension Level1AssembleCanvas {
             onPlaceholderTap(componentType)
           }
         } onPlacedTap: { componentType in
-          print("placed tapped")
           if selectedToolItem == .remove {
             withAnimation {
               isFigurePlaced[index].toggle()

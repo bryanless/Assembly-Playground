@@ -20,6 +20,7 @@ struct ProfilePictureWireframeView: View {
 
   var body: some View {
     Circle()
+      .foregroundColor(Color("ColorImagePlaceholder"))
       .frame(maxWidth: 40)
       .opacity(isHidden ? 0 : 1)
       .onTapGesture {
@@ -33,5 +34,6 @@ struct ProfilePictureWireframeView_Previews: PreviewProvider {
     ProfilePictureWireframeView(isHidden: .constant(false)) { _ in
       print("Profile picture tapped")
     }
+    .previewInterfaceOrientation(.landscapeLeft)
   }
 }

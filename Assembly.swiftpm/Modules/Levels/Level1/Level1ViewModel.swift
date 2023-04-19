@@ -53,7 +53,7 @@ class Level1ViewModel: ObservableObject {
 
     // End disassemble mode when all components are disassembled
     if trailingDockItems.allSatisfy({ $0.currentAmount == $0.maximumAmount }) {
-      DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+      DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
         self.endDisassembleMode()
       }
     }
@@ -131,12 +131,19 @@ class Level1ViewModel: ObservableObject {
             && (selectedDockItemIndex == 2
                 || selectedDockItemIndex == 3) {
           // Merge success
+          // Restore duplicate tool
+          duplicateToolAmount += trailingDockItems[previousSelectedDockItemIndex].currentAmount + trailingDockItems[previousSelectedDockItemIndex].placedAmount - 1
+          duplicateToolAmount += trailingDockItems[selectedDockItemIndex].currentAmount +
+          trailingDockItems[selectedDockItemIndex].placedAmount - 1
+
           // Remove the first selected component
           trailingDockItems.remove(at: previousSelectedDockItemIndex)
+
+          // Replace the last selected component with a merged component
           if previousSelectedDockItemIndex < selectedDockItemIndex {
             selectedDockItemIndex -= 1
           }
-          // Replace the last selected component with a merged component
+
           trailingDockItems[selectedDockItemIndex] = TrailingDockItem(
             id: 4,
             component: ComponentItem<Level1ComponentEnum>(

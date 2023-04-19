@@ -20,9 +20,13 @@ struct ImageCaptionWireframeView: View {
     HStack {
       VStack(alignment: .leading, spacing: Space.extraSmall) {
         RoundedRectangle(cornerRadius: RoundedShape.extraSmall)
+          .foregroundColor(Color("ColorTextPlaceholder"))
           .frame(maxWidth: 100, maxHeight: 12)
+          .preferredColorScheme(.light)
         RoundedRectangle(cornerRadius: RoundedShape.extraSmall)
+          .foregroundColor(Color("ColorTextPlaceholder"))
           .frame(maxWidth: 60, maxHeight: 12)
+          .preferredColorScheme(.light)
       }
       Spacer()
     }

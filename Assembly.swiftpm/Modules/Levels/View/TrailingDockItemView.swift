@@ -25,14 +25,13 @@ struct TrailingDockItemView<ComponentType>: View {
     ZStack(alignment: .topTrailing) {
       ZStack(alignment: .center) {
         RoundedRectangle(cornerRadius: RoundedShape.medium)
-          .foregroundColor(.gray)
+          .foregroundColor(.white.opacity(0))
           .padding()
-          .background(.gray)
+          .background(Color(uiColor: UIColor.systemFill))
           .cornerRadius(RoundedShape.medium)
 
         item.component.view
           .padding()
-          .background(.gray)
           .cornerRadius(RoundedShape.medium)
           .opacity(item.currentAmount == 0 ? 0 : 1)
           .simultaneousGesture(tapGesture)
@@ -40,7 +39,7 @@ struct TrailingDockItemView<ComponentType>: View {
 
       Text(item.currentAmount.description)
         .frame(maxWidth: 40, maxHeight: 40)
-        .background(.blue)
+        .background(.brown)
         .cornerRadius(RoundedShape.small)
         .opacity(item.currentAmount < 2 ? 0 : 1)
     }

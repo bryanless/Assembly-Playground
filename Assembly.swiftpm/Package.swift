@@ -21,7 +21,7 @@ let package = Package(
             displayVersion: "1.0.0",
             bundleVersion: "1",
             appIcon: .placeholder(icon: .lightningBolt),
-            accentColor: .presetColor(.mint),
+            accentColor: .presetColor(.blue),
             supportedDeviceFamilies: [
                 .pad
             ],

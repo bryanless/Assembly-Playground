@@ -31,10 +31,15 @@ struct TrailingToolRowItemView: View {
     }
 
   var body: some View {
-    HStack {
+    HStack(spacing: Space.small) {
       Image(systemName: iconName)
-        .imageScale(.large)
+        .resizable()
+        .aspectRatio(1, contentMode: .fit)
+        .frame(maxWidth: 24)
+        .padding(Space.small)
       Text(title)
+        .bold()
+      Spacer()
     }
     .frame(maxWidth: .infinity)
     .padding()
