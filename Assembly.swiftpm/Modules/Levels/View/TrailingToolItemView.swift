@@ -34,8 +34,6 @@ struct TrailingToolItemView: View {
           .resizable()
           .aspectRatio(1, contentMode: .fit)
           .padding(Space.extraLarge)
-          .background(.indigo)
-        .cornerRadius(RoundedShape.medium)
       }
       .simultaneousGesture(tapGesture)
 
@@ -43,8 +41,9 @@ struct TrailingToolItemView: View {
         .frame(maxWidth: 32, maxHeight: 32)
         .background(.blue)
         .cornerRadius(RoundedShape.small)
-        .opacity(roleAmount < 2 ? 0 : 1)
+        .opacity(roleAmount < 1 ? 0 : 1)
     }
+    .background(role == .duplicate && roleAmount < 1 ? Color.secondary : .indigo)
     .cornerRadius(RoundedShape.medium)
     .overlay {
       RoundedRectangle(cornerRadius: RoundedShape.medium)

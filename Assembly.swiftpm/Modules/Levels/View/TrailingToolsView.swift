@@ -19,8 +19,10 @@ struct TrailingToolsView: View {
         role: .duplicate,
         roleAmount: duplicateAmount,
         isSelected: selectedTool == .duplicate) { toolRole in
-          selectedTool = selectedTool == toolRole ? nil : .duplicate
-          onItemTap(toolRole)
+          if duplicateAmount > 0 {
+            selectedTool = selectedTool == toolRole ? nil : .duplicate
+            onItemTap(toolRole)
+          }
         }
       TrailingToolItemView(
         iconName: "trash",

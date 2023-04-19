@@ -74,7 +74,7 @@ extension Level1View {
       if viewModel.isAssembleMode {
         TrailingToolsView(
           selectedTool: $viewModel.selectedToolItem,
-          duplicateAmount: 6) { toolRole in
+          duplicateAmount: viewModel.duplicateToolAmount) { toolRole in
             viewModel.onTrailingToolItemTap(toolRole: toolRole)
           }
       }

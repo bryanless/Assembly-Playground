@@ -10,6 +10,7 @@ import SwiftUI
 class Level1ViewModel: ObservableObject {
   @Published var isAssembleMode: Bool = false
   @Published var selectedToolItem: ToolItemEnum?
+  @Published var duplicateToolAmount: Int = 5
   @Published var selectedDockItemIndex: Int = -1
   @Published var trailingDockItems: [TrailingDockItem<Level1ComponentEnum>] = [
     TrailingDockItem(
@@ -110,21 +111,40 @@ class Level1ViewModel: ObservableObject {
     print(selectedDockItemIndex.description)
     print(componentType)
 
-    // Remove currently active tool only if it is remove tool
-    if selectedToolItem != nil {
-      selectedToolItem = nil
+    switch selectedToolItem {
+    case .none:
+      break
+    case .duplicate:
+      if let index = trailingDockItems.firstIndex(where: { $0.component.type == componentType }) {
+        withAnimation {
+          duplicateToolAmount -= 1
+          trailingDockItems[index].currentAmount += 1
+        }
+      }
+    case .remove:
+      if let index = trailingDockItems.firstIndex(where: { $0.component.type == componentType }) {
+        if trailingDockItems[index].currentAmount > 1 {
+          withAnimation {
+            duplicateToolAmount += 1
+            trailingDockItems[index].currentAmount -= 1
+          }
+        }
+      }
     }
+
+    // Remove currently active tool
+    selectedToolItem = nil
   }
 
   func endDisassembleMode() {
-    // Show guide canvas, hide disassemble canvas
     withAnimation {
+      // Show guide canvas, hide disassemble canvas
       isAssembleMode = true
-    }
 
-    // Reset all component amount to 1
-    for index in 0..<trailingDockItems.count {
-      trailingDockItems[index].currentAmount = 1
+      // Reset all component amount to 1
+      for index in 0..<trailingDockItems.count {
+        trailingDockItems[index].currentAmount = 1
+      }
     }
   }
 }
